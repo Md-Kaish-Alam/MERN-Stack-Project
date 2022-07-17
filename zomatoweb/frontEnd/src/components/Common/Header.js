@@ -72,7 +72,6 @@ export default function Header() {
                     // onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
                 />,
-                
             </Modal>
 
             {/* modal for create an account */}
