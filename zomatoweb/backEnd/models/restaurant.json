@@ -1,0 +1,18 @@
+[
+    {
+        "id":1,
+        "name":"KFC",
+        "city":"Banglore"
+    },
+    {
+        "id":2,
+        "name":"Hotel Taj",
+        "city":"Mumbai"
+    }
+    ,
+    {
+        "id":3,
+        "name":"Ice Parlour",
+        "city":"Pune"
+    }
+]

@@ -1,0 +1,328 @@
+.logo {
+  text-align: center;
+  font-size: 70px;
+  color: red;
+  background: white;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  position: absolute;
+  top: 15%;
+  margin-left: 45%;
+  font-family: Poppins;
+  font-weight: bold;
+}
+
+.button-1 {
+  color: aliceblue;
+  border: 0rem;
+  margin-left: 80%;
+}
+
+.button-2{
+  color: aliceblue;
+  border-color: aliceblue;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: white;
+  color: #636f88;
+  border-right: none;
+  font-size: 17px;
+  border: 0px solid white;
+  cursor: pointer;
+  top: -273px;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-outline-secondary {
+  position: relative;
+  text-align: right;
+  padding: 10px 20px 100px 20px;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  top: -430px;
+}
+
+.headings {
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: normal;
+  position: relative;
+  margin: auto;
+  font-size: 36px;
+  top: -230px;
+}
+
+.locationSelector {
+  position: relative;
+  top: -220px;
+  margin-left: 32%;
+  margin-right: 20%;
+  text-align: center;
+}
+
+.locationDropdown {
+  height: 40px;
+  width: 240px;
+  color: gray;
+  border: none;
+  border-radius: 0px;
+  font-size: 15px;
+  opacity: 0.7;
+  margin-right: 21px;
+  margin-bottom: 25px;
+  float: left;
+}
+
+.restaurantsinput {
+  height: 40px;
+  width: 310px;
+  color: gray;
+  border: none;
+  border-radius: 0px;
+  font-size: 15px;
+  opacity: 0.7;
+  float: left;
+  padding-left: 30px;
+}
+
+.search {
+  position: absolute !important;
+  left: 275px;
+  margin: 2% 0px;
+}
+
+.quicksearchText {
+  position: absolute;
+  margin-left: 50px;
+  margin-top: -35px;
+}
+.quicksearch {
+  position: absolute;
+  margin-left: 65px;
+  margin-top: 55px;
+}
+
+.quicksearchHeading {
+  text-align: left;
+  color: #192f60;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  padding-left: 35px;
+}
+.quicksearchSubHeading {
+  text-align: left;
+  color: gray;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  padding-left: 35px;
+  margin-bottom:  1%;
+  margin-top: 0%;
+}
+
+.titleContainer {
+  height: 135px;
+  width: 350px;
+  background-color: white;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  box-shadow: 0 3px 6px gray;
+  float: left;
+}
+
+.titleComponent1 {
+  width: 45%;
+  float: left;
+}
+
+.titleComponent2 {
+  width: 50%;
+  float: left;
+  margin-top: 10px;
+}
+
+.componentHeading {
+  text-align: left;
+  color: #192f60;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.componentSubHeading {
+  text-align: left;
+  color: gray;
+  font-size: 18px;
+}
+
+.qs-block {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.marg-bot {
+  margin-bottom: 10px;
+}
+
+.heading {
+  width: 88px;
+  height: 25px;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@media only screen and (max-width: 600px) {
+  .restaurantsinput {
+    height: 40px;
+    width: 245px;
+    color: gray;
+    border: none;
+    border-radius: 0px;
+    font-size: 15px;
+    opacity: 0.7;
+    float: left;
+  }
+  .logo {
+    text-align: center;
+    font-size: 60px;
+    color: red;
+    background: white;
+    width: 90px;
+    height: 95px;
+    border-radius: 50%;
+    position: absolute;
+    top: 23%;
+    margin-left: 40%;
+    margin-right: 40%;
+    font-family: Poppins;
+    font-weight: bold;
+  }
+  .locationSelector {
+    position: relative;
+    top: -238px;
+    margin-left: 23.5%;
+    margin-right: 20%;
+    text-align: center;
+  }
+  .search {
+    position: absolute !important;
+    left: 5px;
+    margin: 2% 0px;
+    top: 73px !important;
+  }
+  #notebooks {
+    position: absolute;
+    left: 28%;
+    width: 350px;
+    border-radius: 5px;
+    max-height: 450px;
+
+}
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1150px) {
+  .locationDropdown {
+    height: 40px;
+    width: 310px;
+    color: gray;
+    border: none;
+    border-radius: 0px;
+    font-size: 15px;
+    opacity: 0.7;
+    margin-right: 21px;
+    margin-bottom: 25px;
+    float: left;
+  }
+  .locationSelector {
+    position: relative;
+    top: -238px;
+    margin-left: 32.5%;
+    margin-right: 20%;
+    text-align: center;
+  }
+  .search {
+    position: absolute !important;
+    left: 5px;
+    margin: 1% 0px;
+    top: 73px !important;
+  }
+}
+
+#notebooks {
+  float: left;
+}
+
+#notebooks ul {
+  margin: 0;
+  padding: 0;
+  margin-top: 40px;
+  list-style: none;
+}
+
+#notebooks ul li {
+  padding: 5px 10px;
+  background-color: #ccc;
+  opacity: 0.8;
+  border-top: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+#notebooks ul li a{
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+}
+
+#notebooks ul li:hover {
+  background-color: gray;
+  font-weight: 500;
+}
+
+/* #notebooks ul li a:hover{
+}  */
