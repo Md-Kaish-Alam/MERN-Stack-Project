@@ -24,6 +24,7 @@ export default function RestaurantsDetails() {
       <Header></Header>
       <div>
         <img src={thumb} height='500px' width='100%' alt='Foodimage' />
+        {/* <button className='gallery-button'>Click to see image</button> */}
       </div>
       <button className='btn btn-danger' style={{float: 'right' , margin:'15px' , backgroundColor:'#ce0505'}}>Place Online Order</button>
       <div className='heading'>{name}</div>
