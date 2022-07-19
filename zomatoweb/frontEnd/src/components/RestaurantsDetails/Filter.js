@@ -115,8 +115,6 @@ export default function Filter() {
                                 <a href="#">&raquo;</a>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
