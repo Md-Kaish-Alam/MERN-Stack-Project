@@ -1,57 +1,107 @@
- .heading {
-    width: 298px;
-    height: 43px;
-    font-family: Poppins;
-    font-size: 30px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.53;
-    letter-spacing: normal;
-    text-align: left;
-    color: #192f60;
-  }
-  
-  .about {
-    width: 181px;
-    height: 31px;
-    font-family: Poppins;
-    font-size: 22px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: left;
-    color: #192f60;
-  }
-  
-  .head {
-    height: 25px;
-    font-family: Poppins;
-    font-size: 18px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    text-align: left;
-    color: #192f60;
-  }
-  
-  .value {
-    height: 30px;
-    font-family: Poppins;
-    font-size: 16px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.88;
-    letter-spacing: normal;
-    text-align: left;
-    color: #192f60;
-  }
-  
+.container{
+  margin-top: 2%;
+}
+
+.gallery-button {
+  position: absolute;
+  left: 74%;
+  top: 78%;
+  width: 200px;
+  height: 35px;
+  opacity: 0.6;
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+.image-container{
+  border: 1px solid black;
+  width: 100%;
+  height: 100%;
+}
+
+.cut{
+  margin-top: 0%;
+  margin-bottom: 3% ;
+}
+
+.tab-content{
+  margin-top: 2%;
+}
+.heading {
+  width: 298px;
+  height: 43px;
+  font-family: Poppins;
+  font-size: 30px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.53;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+  margin-top: 2%;
+}
+
+.about {
+  width: 100%;
+  height: 31px;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 800;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+  margin: 0.5% 0 1% 0 ;
+}
+
+
+
+.cuisines {
+  height: 30px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  margin: 0.5% 0 2% 0 ;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+}
+
+.head {
+  height: 25px;
+  width: 100%;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+  margin: 0% 0%;
+}
+
+.value {
+  height: 30px;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+}
+
+
   .cart-btn {
     margin: 3px;
   }
