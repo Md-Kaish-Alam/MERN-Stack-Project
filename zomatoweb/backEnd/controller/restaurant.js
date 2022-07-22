@@ -90,9 +90,15 @@ exports.getAllRestaurantsByFilter = (req, res) => {
     //logic of pagination achieved through limit and skip method
     restaurants.find(filter).limit(2).skip(2 * (req.params.pageNo - 1)).sort({ "cost": sort })
         .then(result => {
-            res.status(200).json({
-                message: "data fetched successfully",
-                data: result
+            restaurants.find(filter).count((err,count)=>{
+                if(err)
+                    console.log(err)
+                else
+                    res.status(200).json({
+                    message: "data fetched successfully",
+                    data: result,
+                    totalRecords: count
+                })
             })
         })
 
