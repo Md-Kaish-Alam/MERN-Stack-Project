@@ -5,6 +5,7 @@ const restaurantRoutes = require('./routes/restaurant')
 const locationRoutes = require('./routes/location')
 const menuRoutes = require('./routes/menu')
 const mealTypeRoutes = require('./routes/mealType')
+const paymentRoutes = require('./routes/payment')
 const cors = require('cors')
 
 
@@ -20,8 +21,10 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use('/restaurant',restaurantRoutes)
 app.use('/locations',locationRoutes)
-app.use('/menu',menuRoutes)
+app.use('/restaurant/menu',menuRoutes)
 app.use('/mealtype',mealTypeRoutes)
+
+app.use('/pay',paymentRoutes)
 
 
 app.listen(PORT,()=> {

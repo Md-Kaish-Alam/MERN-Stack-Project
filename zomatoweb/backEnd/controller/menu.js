@@ -1,6 +1,9 @@
 const restaurantsMenu = require('../models/menu.js')
 
-exports.getAllMenu = (req,res) => {
+exports.getMenuByRestaurant = (req,res) => {
+    let filter={
+        restaurantName: req.params.rName
+    }
     restaurantsMenu.find()
         .then(result => {
             res.status(200).json({

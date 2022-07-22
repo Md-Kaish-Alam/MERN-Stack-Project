@@ -15,6 +15,9 @@ export default function Filter() {
     })
 
     const [restaurants, setRestaurants] = useState([])
+    const [pageCount,setPageCount]=useState(0)
+    const [currentPageNo,setCurrentPageNo] = useState(1)
+
 
     const requestOptions = {
         method: 'POST',
@@ -23,13 +26,16 @@ export default function Filter() {
     }
 
     useEffect(() => {
-        fetch('http://localhost:6767/restaurant/filter/1', requestOptions)
+        fetch(`http://localhost:6767/restaurant/filter/${currentPageNo}`, requestOptions)
             .then(response => response.json())
-            .then(data => setRestaurants(data.data))
-    }, [filter])
+            .then(data => {
+                setRestaurants(data.data);
+                setPageCount(data.totalRecords/2);
+            })
+    }, [filter,currentPageNo])
 
     const handleCuisineChange = (event) => {
-        if (event.target.checked){
+        if (event.target.checked) {
             // console.log("checked=",event.target.checked)
             // console.log("name=",event.target.name)
             filter.cuisine.push(event.target.name)
@@ -41,29 +47,37 @@ export default function Filter() {
             if (index > -1)
                 filter.cuisine.splice(index, 1)
         }
-        setFilter({...filter })
+        setFilter({ ...filter })
     }
-    
+
     const handleCostChange = (lcost, hcost) => {
         filter.lcost = lcost;
         filter.hcost = hcost;
-        setFilter({...filter})
+        setFilter({ ...filter })
     }
 
-    const handleSort=(s)=>{
+    const handleSort = (s) => {
         filter.sort = s;
-        setFilter({...filter})
+        setFilter({ ...filter })
     }
+
+    const paginationItems= [];
+     for(let i = 1; i <=pageCount; i++){
+        paginationItems[i]= <a href="#" key={i} onClick={()=>setCurrentPageNo(i)}>{i}</a>
+    }
+
 
 
     return (
-        <div>
+        <div className='main-container'>
+            <div>
             <Header></Header>
-            <div className='main-container'>
+            </div>
+            <div className='content'>
                 <div id="myId" className="heading-filter">Breakfast Places in Delhi</div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-sm-3 col-md-3 col-lg-3">
+                        <div className="col-    sm-3 col-md-3 col-lg-3">
                             <div className="filter-options">
                                 <span className="glyphicon glyphicon-th-list toggle-span" data-toggle="collapse"
                                     data-target="#demo"></span>
@@ -96,72 +110,72 @@ export default function Filter() {
                                     </div>
                                     <div className="Cuisine">Cost For Two</div>
                                     <div>
-                                        <input type="radio" name="cost" onChange={()=>handleCostChange(0,500)} />
+                                        <input type="radio" name="cost" onChange={() => handleCostChange(0, 500)} />
                                         <span className="checkbox-items">Less than &#8377; 500</span>
                                     </div>
                                     <div>
-                                        <input type="radio" name="cost" onChange={()=>handleCostChange(500,1000)} />
+                                        <input type="radio" name="cost" onChange={() => handleCostChange(500, 1000)} />
                                         <span className="checkbox-items">&#8377; 500 to &#8377; 1000</span>
                                     </div>
                                     <div>
-                                        <input type="radio" name="cost" onChange={()=>handleCostChange(1000,1500)} />
+                                        <input type="radio" name="cost" onChange={() => handleCostChange(1000, 1500)} />
                                         <span className="checkbox-items">&#8377; 1000 to &#8377; 1500</span>
                                     </div>
                                     <div>
-                                        <input type="radio" name="cost" onChange={()=>handleCostChange(1500,2000)} />
+                                        <input type="radio" name="cost" onChange={() => handleCostChange(1500, 2000)} />
                                         <span className="checkbox-items">&#8377; 1500 to &#8377; 2000</span>
                                     </div>
                                     <div>
-                                        <input type="radio" name="cost" onChange={()=>handleCostChange(2000,5000)} />
+                                        <input type="radio" name="cost" onChange={() => handleCostChange(2000, 5000)} />
                                         <span className="checkbox-items">&#8377; 2000 +</span>
                                     </div>
                                     <div>
-                                        <input type="radio" name="cost" onChange={()=>handleCostChange(0,5000)} />
+                                        <input type="radio" name="cost" onChange={() => handleCostChange(0, 5000)} />
                                         <span className="checkbox-items">All</span>
                                     </div>
                                     <div className="Cuisine">Sort</div>
                                     <div>
-                                        <input type="radio" name="sort" checked={filter.sort==1} onChange={()=>handleSort(1)} />
+                                        <input type="radio" name="sort" checked={filter.sort == 1} onChange={() => handleSort(1)} />
                                         <span className="checkbox-items">Price low to high</span>
-                                    </div> 
+                                    </div>
                                     <div>
-                                        <input type="radio" name="sort" checked={filter.sort== -1} onChange={()=>handleSort(-1)} />
+                                        <input type="radio" name="sort" checked={filter.sort == -1} onChange={() => handleSort(-1)} />
                                         <span className="checkbox-items">Price high to low</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* <div className="col-sm-9 col-md-9 col-lg-9 scroll">
-                        {
-                            restaurantList.length > 0 ? restaurantList.map((item) =>
-                            <div className="Item" >
-                            <div className="row pl-1">
-                            <div className="col-sm-4 col-md-4 col-lg-4">
-                            <img className="img" src={require('../Assets/breakfast.jpg')} />
+                        <div className="col-sm-9 col-md-9 col-lg-9 scroll">
+                            {
+                                restaurants.length > 0 ? restaurants.map((item) =>
+                                    <div className="Item" >
+                                        <div className="row pl-1 up">
+                                            <div className="col-sm-4 col-md-4 col-lg-4">
+                                                <img className="img" src={require('../../assets/breakfast.png')} />
+                                            </div>
+                                            <div className="col-sm-8 col-md-8 col-lg-8">
+                                                <div className="rest-name">{item.name}</div>
+                                                <div className="res-location">{item.locality}</div>
+                                                <div className="rest-address">{item.city_name}</div>
+                                            </div>
                                         </div>
-                                        <div className="col-sm-8 col-md-8 col-lg-8">
-                                        <div className="rest-name">{item.name}</div>
-                                        <div className="res-location">{item.locality}</div>
-                                        <div className="rest-address">{item.city_name}</div>
-                                        </div>
-                                        </div>
-                                        <hr />
+                                        <hr/>
                                         <div className="row padding-left">
-                                        <div className="col-sm-12 col-md-12 col-lg-12">
-                                            <div className="rest-address">CUISINES : {item.Cuisine.length && item.Cuisine.map((item) => item.name + ' ')}</div>
-                                            <div className="rest-address">COST FOR TWO : {item.cost} </div>
+                                            <div className="col-sm-12 col-md-12 col-lg-12">
+                                                <div className="rest-address">CUISINES : {item.Cuisine.length && item.Cuisine.map((item) => item.name + ' ')}</div>
+                                                <div className="rest-address">COST FOR TWO : {item.cost} </div>
                                             </div>
-                                            </div>
-                                            </div>
+                                        </div>
+                                    </div>
 
-                            ) : <div className="noData"> No Data Found</div>
-                        }
-                        </div> */}
+                                ) : <div className="noData"> No Data Found</div>
+                            }
+                        </div>
                         <div>
                             <div className="pagination">
                                 <a href="#">&laquo;</a>
-                                {/* {paginationItems} */}
+                                {paginationItems}
                                 <a href="#">&raquo;</a>
                             </div>
                         </div>
