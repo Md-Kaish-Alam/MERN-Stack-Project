@@ -35,6 +35,7 @@ export default function RestaurantsDetails() {
   const { rName } = useParams()
   const [restaurant, setRestaurant] = useState({})
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
+  const [isFullImageOpen, setFullImageOpen] = useState(false)
   const [menu, setMenu] = useState({})
   const [totalPrice, setTotalPrice] = useState(0)
 
@@ -95,31 +96,31 @@ export default function RestaurantsDetails() {
       //open razorpay window
       const options = {
         key: "rzp_test_wnR0tFBazk0lwY",
-        name : 'zomato food delivery app',
-        amount : orderData.amount,
+        name: 'zomato food delivery app',
+        amount: orderData.amount,
         currency: orderData.currency,
-        order_id : orderData.id,
+        order_id: orderData.id,
         prefill: {
-          email :'hahiri5791@shbiso.com',
-          contact :'202-555-0183'
+          email: 'hahiri5791@shbiso.com',
+          contact: '202-555-0183'
         },
-        handler: function(response){
+        handler: function (response) {
           //call api that would save transactions in DataBase
-          fetch(`http://localhost:6767/pay/save`,  {
+          fetch(`http://localhost:6767/pay/save`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({
-              razorpay_order_id:response.razorpay_order_id, 
-              razorpay_payment_id:response.razorpay_payment_id, 
-              razorpay_signature:response.razorpay_signature , 
-              razorpay_amount: orderData.amount, 
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              razorpay_amount: orderData.amount,
             })
-          }).then(resp=>console.log(resp))
+          }).then(resp => console.log(resp))
         }
       }
       const paymentWindow = new window.Razorpay(options)
       paymentWindow.open()
-    }catch (error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -129,37 +130,43 @@ export default function RestaurantsDetails() {
   return (
     <div>
       <Header></Header>
-      <div>
-        <img src={thumb} height='500px' width='100%' alt='Foodimage' />
-        {/* <button className='gallery-button'>Click to see image</button> */}
-      </div>
-      <button
-        className='btn btn-danger'
-        style={{ float: 'right', margin: '15px', backgroundColor: '#ce0505' }}
-        onClick={() => { setIsMenuModalOpen(true); fetchMenu(); }}>
-        Place Online Order
-      </button>
-      <div className='heading'>{name}</div>
-      <div>
-        <Tabs>
-          <TabList>
-            <Tab>OverView</Tab>
-            <Tab>Contact</Tab>
-          </TabList>
-          <TabPanel>
-            <div className='about'>About the Place</div>
-            <div className='head'>Cuisine</div>
-            {cuisineList}
-            <div className='head'>Average Cost</div>
-            <div className='value'>&#8377;{cost}</div>
-          </TabPanel>
-          <TabPanel>
-            <div className='head'>Phone Number</div>
-            <div className='value'>+91-7061238198</div>
-            <div className='head'>{name}</div>
-            <div className='value'>{address}</div>
-          </TabPanel>
-        </Tabs>
+      <div className="container">
+        <div className='img-container'>
+          <img src={thumb} height='500px' width='100%' alt='Foodimage' />
+          <button className='gallery-button' onClick={() => setFullImageOpen(true)}>Click to see image</button>
+        </div>
+        <button
+          className='btn btn-danger'
+          style={{ float: 'right', margin: '15px', backgroundColor: '#ce0505' }}
+          onClick={() => { setIsMenuModalOpen(true); fetchMenu(); }}>
+          Place Online Order
+        </button>
+        <div className='heading'>{name}</div>
+        <div className='tab-content'>
+          <Tabs>
+            <TabList
+              style={{
+                borderBottom: '1px solid black'
+              }}
+            >
+              <Tab>OverView</Tab>
+              <Tab>Contact</Tab>
+            </TabList>
+            <TabPanel>
+              <div className='about'>About the Place</div>
+              <div className='head'>Cuisine</div>
+              {cuisineList}
+              <div className='head'>Average Cost</div>
+              <div className='value'>&#8377;{cost}</div>
+            </TabPanel>
+            <TabPanel>
+              <div className='head'>Phone Number</div>
+              <div className='value'>+91-7061238198</div>
+              <div className='head'>{name}</div>
+              <div className='value'>{address}</div>
+            </TabPanel>
+          </Tabs>
+        </div>
       </div>
       <div>
         <Modal isOpen={isMenuModalOpen}>
@@ -208,6 +215,16 @@ export default function RestaurantsDetails() {
               </div>
             </div>
           </div>
+        </Modal>
+      </div>
+      <div>
+        <Modal
+          isOpen={isFullImageOpen}
+        >
+          <div className='cut'>
+            <button className='btn btn-light float-end' onClick={() => setFullImageOpen(false)}>X</button>
+          </div>
+          <img src={thumb} height='93%' width='100%' alt='Foodimage' />    
         </Modal>
       </div>
     </div>
