@@ -9,9 +9,12 @@ const paymentRoutes = require('./routes/payment')
 const cors = require('cors')
 
 
-const PORT = 6767
+const PORT = process.env.PORT || 6767
 
-mongoose.connect('mongodb://localhost:27017/ZomatoFile', () => {
+const DBCONNECTINGSTRING = `mongodb+srv://KaishAlam:Fp0MlaJlUzzh97Ys@cluster0.nrq1r.mongodb.net/ZomatoFile`
+// `mongodb://localhost:27017/ZomatoFile`
+
+mongoose.connect(DBCONNECTINGSTRING, () => {
     console.log('mongoDB connected')
 },e => console.log(e))
 
@@ -26,6 +29,11 @@ app.use('/mealtype',mealTypeRoutes)
 
 app.use('/pay',paymentRoutes)
 
+
+//heroku configuration
+if(process.env.NODE_ENV='production'){
+    app.use(express.static('frontend/build'))
+}
 
 app.listen(PORT,()=> {
     console.log(`app is running port: ${PORT}`);

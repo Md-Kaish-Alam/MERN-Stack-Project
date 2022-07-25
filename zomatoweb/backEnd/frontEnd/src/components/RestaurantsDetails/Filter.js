@@ -15,9 +15,9 @@ export default function Filter() {
     })
 
     const [restaurants, setRestaurants] = useState([])
-    const [pageCount,setPageCount]=useState(0)
-    const [currentPageNo,setCurrentPageNo] = useState(1)
-
+    const [pageCount, setPageCount] = useState(0)
+    const [currentPageNo, setCurrentPageNo] = useState(1)
+    const [locations, setLocations] = useState([])
 
     const requestOptions = {
         method: 'POST',
@@ -30,22 +30,26 @@ export default function Filter() {
             .then(response => response.json())
             .then(data => {
                 setRestaurants(data.data);
-                setPageCount(data.totalRecords/2);
+                setPageCount(data.totalRecords / 2);
             })
-    }, [filter,currentPageNo])
+    }, [filter, currentPageNo]);
 
+    useEffect(() => {
+        fetch(`http://localhost:6767/locations`, {method: 'GET'})
+            .then(response => response.json())
+            .then(data => {
+                setLocations(data.data);
+            })
+    },[filter])
+   
     const handleCuisineChange = (event) => {
         if (event.target.checked) {
-            // console.log("checked=",event.target.checked)
-            // console.log("name=",event.target.name)
             filter.cuisine.push(event.target.name)
         }
         else {
-            // console.log("checked=",event.target.checked)
-            // console.log("name=",event.target.name)
             let index = filter.cuisine.indexOf(event.target.name)
             if (index > -1)
-                filter.cuisine.splice(index, 1)
+                filter.cuisine.splice(index, 1)    
         }
         setFilter({ ...filter })
     }
@@ -61,17 +65,22 @@ export default function Filter() {
         setFilter({ ...filter })
     }
 
-    const paginationItems= [];
-     for(let i = 1; i <=pageCount; i++){
-        paginationItems[i]= <a href="#" key={i} onClick={()=>setCurrentPageNo(i)}>{i}</a>
+    const handleLocationchange = (event)=>{
+        filter.city=(event.target.value)
+        setFilter({...filter })
     }
 
+    let locationList = locations.length && locations.map((item)=> <option key={item.name} value = {item.city_id}>{item.name}</option>)
 
+    const paginationItems = [];
+    for (let i = 1; i <= pageCount; i++) {
+        paginationItems[i] = <a href="#" key={i} onClick={() => setCurrentPageNo(i)}>{i}</a>
+    }
 
     return (
         <div className='main-container'>
             <div>
-            <Header></Header>
+                <Header></Header>
             </div>
             <div className='content'>
                 <div id="myId" className="heading-filter">Breakfast Places in Delhi</div>
@@ -84,8 +93,9 @@ export default function Filter() {
                                 <div id="demo" className="collapse show">
                                     <div className="filter-heading">Filters</div>
                                     <div className="Select-Location">Select Location</div>
-                                    <select className="Rectangle-2236" >
+                                    <select className="Rectangle-2236" onChange={(e)=> handleLocationchange(e)}>
                                         <option >Select</option>
+                                        {locationList}
                                     </select>
                                     <div className="Cuisine">Cuisine</div>
                                     <div>
@@ -135,24 +145,23 @@ export default function Filter() {
                                     </div>
                                     <div className="Cuisine">Sort</div>
                                     <div>
-                                        <input type="radio" name="sort" checked={filter.sort == 1} onChange={() => handleSort(1)} />
+                                        <input type="radio" name="sort" checked={filter.sort === 1} onChange={() => handleSort(1)} />
                                         <span className="checkbox-items">Price low to high</span>
                                     </div>
                                     <div>
-                                        <input type="radio" name="sort" checked={filter.sort == -1} onChange={() => handleSort(-1)} />
+                                        <input type="radio" name="sort" checked={filter.sort === -1} onChange={() => handleSort(-1)} />
                                         <span className="checkbox-items">Price high to low</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div className="col-sm-9 col-md-9 col-lg-9 scroll">
                             {
                                 restaurants.length > 0 ? restaurants.map((item) =>
                                     <div className="Item" >
                                         <div className="row pl-1 up">
                                             <div className="col-sm-4 col-md-4 col-lg-4">
-                                                <img className="img" src={require('../../assets/breakfast.png')} />
+                                                <img className="img" alt='Food' src={require('../../assets/breakfast.png')} />
                                             </div>
                                             <div className="col-sm-8 col-md-8 col-lg-8">
                                                 <div className="rest-name">{item.name}</div>
@@ -160,7 +169,7 @@ export default function Filter() {
                                                 <div className="rest-address">{item.city_name}</div>
                                             </div>
                                         </div>
-                                        <hr/>
+                                        <hr />
                                         <div className="row padding-left">
                                             <div className="col-sm-12 col-md-12 col-lg-12">
                                                 <div className="rest-address">CUISINES : {item.Cuisine.length && item.Cuisine.map((item) => item.name + ' ')}</div>

@@ -32,7 +32,10 @@ const modalStyle = {
 
 export default function RestaurantsDetails() {
 
+  
+
   const { rName } = useParams()
+ 
   const [restaurant, setRestaurant] = useState({})
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [isFullImageOpen, setFullImageOpen] = useState(false)
@@ -45,6 +48,8 @@ export default function RestaurantsDetails() {
       .then(response => response.json())
       .then(data => setRestaurant(data.data))
   }, [rName])
+
+ 
 
   const fetchMenu = () => {
     fetch(`http://localhost:6767/restaurant/menu/${rName}`, { method: 'GET' })
@@ -126,7 +131,7 @@ export default function RestaurantsDetails() {
   }
   const { name, thumb, cost, Cuisine, address } = restaurant
   let cuisineList = !(Cuisine === undefined) && Cuisine.length && Cuisine.map((item) => item.name)
-
+  
   return (
     <div>
       <Header></Header>
@@ -190,9 +195,9 @@ export default function RestaurantsDetails() {
                             <span className='text-danger fs-6'>Non-Veg</span>
                         }
                       </div>
-                      <div className='cuisines'>{item.itemName}</div>
-                      <div className='cuisines'>&#8377;{item.itemPrice}</div>
-                      <div className='cuisines'>{item.itemDescription}</div>
+                      <div className='cuisine'>{item.itemName}</div>
+                      <div className='cuisine'>&#8377;{item.itemPrice}</div>
+                      <div className='cuisine'>{item.itemDescription}</div>
                       <div className='cart-btn'>
                         <button className='btn btn-secondary cart-btn' onClick={() => addTotalPrice(item)}>Add</button>
                         <button className='btn btn-secondary cart-btn' onClick={() => remTotalPrice(item)}>Remove</button>
