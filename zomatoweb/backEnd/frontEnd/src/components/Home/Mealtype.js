@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../Styles/Home.css'
+import { Link } from 'react-router-dom'
 
 export default function MealType(props) {
 
@@ -13,7 +14,7 @@ export default function MealType(props) {
                     </div>
                     <div className='titleComponent2'>
                         <div className='componentHeading'>
-                            {name}
+                            <Link to={`/filter`} style={{ textDecoration: 'none' , color: '#192f60'}} >{name}</Link>
                         </div>
                         <div className='componentSubHeading'>
                             {content}

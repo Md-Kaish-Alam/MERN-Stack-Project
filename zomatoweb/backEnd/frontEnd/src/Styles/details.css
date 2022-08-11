@@ -1,4 +1,4 @@
-.container{
+.container {
   margin-top: 2%;
 }
 
@@ -13,18 +13,18 @@
   background-color: #ffffff;
 }
 
-.image-container{
+.image-container {
   border: 1px solid black;
   width: 100%;
   height: 100%;
 }
 
-.cut{
+.cut {
   margin-top: 0%;
-  margin-bottom: 3% ;
+  margin-bottom: 3%;
 }
 
-.tab-content{
+.tab-content {
   margin-top: 2%;
 }
 .heading {
@@ -54,10 +54,8 @@
   letter-spacing: normal;
   text-align: left;
   color: #192f60;
-  margin: 0.5% 0 1% 0 ;
+  margin: 0.5% 0 1% 0;
 }
-
-
 
 .cuisines {
   height: 30px;
@@ -72,20 +70,6 @@
   text-align: left;
   color: #192f60;
 }
-
-.cuisine {
-  height: 30px;
-  font-family: Poppins;
-  font-size: 20px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.88;
-  letter-spacing: normal;
-  text-align: left;
-  color: #192f60;
-}
-
 .head {
   height: 25px;
   width: 100%;
@@ -114,33 +98,130 @@
   color: #192f60;
 }
 
+.cut {
+  margin: 5px;
+}
 
-  .cart-btn {
-    margin: 3px;
+.cut:hover {
+  background-color: rgb(16, 3, 3);
+  color: #fbfbfb;
+}
+
+.totalPay {
+  display: flex;
+}
+
+.pay-btn {
+  margin-right: 0%;
+  width: 100px;
+}
+
+.modal-content {
+  margin: 2.5% 10%;
+  width: 80%;
+  height: 90%;
+}
+.modal-contents {
+  margin: 2.5% 10%;
+  width: 80%;
+  height: 90%;
+}
+
+.main {
+  margin: 2%;
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+}
+
+.menu {
+  width: 70%;
+  height: 600px;
+  overflow: scroll;
+}
+
+.cuisine {
+  display: flex;
+  flex-direction: row;
+  background-color: #fbfbfb;
+  padding: 2%;
+  margin-bottom: 2%;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+}
+
+.cuisineDetails {
+  width: 65%;
+  margin: 0.5%;
+}
+
+.cuisine-name {
+  height: 30px;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+  margin-bottom: 2%;
+}
+
+.cuisine-price{
+  height: 30px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: left;
+  color: #192f60;
+}
+
+.cart-btn {
+  margin: 5%;
+  width: 35%;
+}
+
+.price {
+  width: 30%;
+  height: 600px;
+  margin-left: 1%;
+}
+
+.cart-container {
+  height: 90%;
+}
+
+.price-container {
+  height: 10%;
+}
+
+.close-button{
+  position: absolute;
+  left: 95%;
+  top: 5%;
+  width: 35px;
+  height: 35px;
+  color: #ffffff;
+  opacity: 0.8;
+  border-radius: 5px;
+  border: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .gallery-button {
+    position: absolute;
+    left: 55%;
+    top: 85%;
+    width: 200px;
+    height: 35px;
+    opacity: 0.6;
+    border-radius: 3px;
+    background-color: #ffffff;
   }
-  
-  .totalPay{
-    display: flex;
-  }
-
-  .pay-btn{
-    margin-left: 15%;
-    width: 100px;
-  }
-
-  
-  @media only screen and (max-width: 600px) {
-    .gallery-button {
-      position: absolute;
-      left: 55%;
-      top: 85%;
-      width: 200px;
-      height: 35px;
-      opacity: 0.6;
-      border-radius: 3px;
-      background-color: #ffffff;
-    }
-  }
-
-
-  
+}

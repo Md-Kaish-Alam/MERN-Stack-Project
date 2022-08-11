@@ -26,21 +26,21 @@ const modalStyle = {
     left: 'auto',
     right: 'auto',
     width: 'auto',
-    tranform: 'translate(-50%,-50%)'
+    tranform: 'translate(-50%,-50%)',
   }
 }
 
+
 export default function RestaurantsDetails() {
 
-  
-
   const { rName } = useParams()
- 
+
   const [restaurant, setRestaurant] = useState({})
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [isFullImageOpen, setFullImageOpen] = useState(false)
   const [menu, setMenu] = useState({})
   const [totalPrice, setTotalPrice] = useState(0)
+  const [selectedItem , setSelectedItem] = useState()
 
 
   useEffect(() => {      //behave like componentDidMount if second parameter is a blank array and if it is not blank it behaves like componentDidUpdate
@@ -49,7 +49,7 @@ export default function RestaurantsDetails() {
       .then(data => setRestaurant(data.data))
   }, [rName])
 
- 
+
 
   const fetchMenu = () => {
     fetch(`http://localhost:6767/restaurant/menu/${rName}`, { method: 'GET' })
@@ -61,6 +61,7 @@ export default function RestaurantsDetails() {
 
     let price = totalPrice + item.itemPrice;
     setTotalPrice(price);
+    setSelectedItem(item);
   }
 
   const remTotalPrice = (item) => {
@@ -72,6 +73,7 @@ export default function RestaurantsDetails() {
     else {
       setTotalPrice(price);
     }
+    setSelectedItem(undefined);
   }
 
   const loadScript = (src) => {
@@ -131,7 +133,7 @@ export default function RestaurantsDetails() {
   }
   const { name, thumb, cost, Cuisine, address } = restaurant
   let cuisineList = !(Cuisine === undefined) && Cuisine.length && Cuisine.map((item) => item.name)
-  
+
   return (
     <div>
       <Header></Header>
@@ -174,49 +176,70 @@ export default function RestaurantsDetails() {
         </div>
       </div>
       <div>
-        <Modal isOpen={isMenuModalOpen}>
-          <div>
-            <div className='row'>
-              <div className='col-sm-9'>
-                <h2>Menu</h2>
+        <Modal isOpen={isMenuModalOpen} className='modal-content modal-contents'>
+          <div >
+            <button className='btn btn-light float-end cut' onClick={() => setIsMenuModalOpen(false)} style={modalStyle}>X</button>
+            <div className='main'>
+              <div className='menu'>
+                <ul class="list-unstyled">
+                  {
+                    menu.length && menu.map((item, index) =>
+                      <li key={index}>
+                        <div className='cuisine' >
+                          <div className='cuisineDetails'>
+                            <div className='isVeg' >
+                              {
+                                item.isVeg ? <span className='text-success fs-6'>Veg</span> :
+                                  <span className='text-danger fs-6'>Non-Veg</span>
+                              }
+                            </div>
+                            <div className='cuisine-name'>{item.itemName}</div>
+                            <div className='cuisine-price'>&#8377;{item.itemPrice}</div>
+                            <div className='cuisine-desc'>{item.itemDescription}</div>
+                          </div>
+                          <div className='cart-btn'>
+                            <button className='btn btn-info cart-btn'
+                              onClick={() => {
+                                addTotalPrice(item);
+                              }}>
+                              Add
+                            </button>
+                            <button className='btn btn-warning cart-btn'
+                              onClick={() => {
+                                remTotalPrice(item);
+                              }}>
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </li>)
+                  }
+                </ul>
               </div>
-              <div className='col-sm-3'>
-                <button className='btn btn-danger float-end' onClick={() => setIsMenuModalOpen(false)} style={modalStyle}>X</button>
-              </div>
-            </div>
-            <div className='menu'>
-              <ul>
-                {
-                  menu.length && menu.map((item, index) =>
-                    <li key={index}>
-                      <div>
-                        {
-                          item.isVeg ? <span className='text-success fs-6'>Veg</span> :
-                            <span className='text-danger fs-6'>Non-Veg</span>
-                        }
-                      </div>
-                      <div className='cuisine'>{item.itemName}</div>
-                      <div className='cuisine'>&#8377;{item.itemPrice}</div>
-                      <div className='cuisine'>{item.itemDescription}</div>
-                      <div className='cart-btn'>
-                        <button className='btn btn-secondary cart-btn' onClick={() => addTotalPrice(item)}>Add</button>
-                        <button className='btn btn-secondary cart-btn' onClick={() => remTotalPrice(item)}>Remove</button>
-                      </div>
-                    </li>)
-                }
-              </ul>
-              <hr />
-              <div className='totalPay'>
-                <h3 className='col-sm-9'>Total Price : {totalPrice}</h3>
-                <button
-                  className='btn btn-danger pay-btn'
-                  onClick={() => {
-                    setIsMenuModalOpen(false);
-                    loadScript(`https://checkout.razorpay.com/v1/checkout.js`);
-                    openRazorpay();
-                  }}>
-                  Pay Now
-                </button>
+              <div className='price'>
+                <div className='cart-container' >
+                  <div className='cart'>
+                    <h3 className='col-sm-9'>Your Orders</h3>
+                    {JSON.stringify(selectedItem)}
+                  </div>
+                </div>
+                <div className='price-container' style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div className='totalPrice' style={{ width: '60%' }}>
+                    <h3 style={{ marginLeft: '8%' }}> Total Price : {totalPrice}</h3>
+
+                  </div>
+                  <div className='pay-btn' style={{ width: '40%', marginTop: '5%' }}>
+                    <button
+                      className='btn btn-danger float-end'
+                      onClick={() => {
+                        setIsMenuModalOpen(false);
+                        loadScript(`https://checkout.razorpay.com/v1/checkout.js`);
+                        openRazorpay();
+                      }}>
+                      Pay Now
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -226,10 +249,8 @@ export default function RestaurantsDetails() {
         <Modal
           isOpen={isFullImageOpen}
         >
-          <div className='cut'>
-            <button className='btn btn-light float-end' onClick={() => setFullImageOpen(false)}>X</button>
-          </div>
-          <img src={thumb} height='93%' width='100%' alt='Foodimage' />    
+          <img src={thumb} height='100%' width='100%' alt='Foodimage' className='foodimage' />
+          <button className='close-button btn btn-danger' onClick={() => setFullImageOpen(false)}>X</button>
         </Modal>
       </div>
     </div>

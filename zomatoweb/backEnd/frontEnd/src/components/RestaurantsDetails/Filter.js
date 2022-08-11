@@ -86,7 +86,7 @@ export default function Filter() {
                 <div id="myId" className="heading-filter">Breakfast Places in Delhi</div>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-    sm-3 col-md-3 col-lg-3">
+                        <div className="col-sm-3 col-md-3 col-lg-3">
                             <div className="filter-options">
                                 <span className="glyphicon glyphicon-th-list toggle-span" data-toggle="collapse"
                                     data-target="#demo"></span>
@@ -169,15 +169,14 @@ export default function Filter() {
                                                 <div className="rest-address">{item.city_name}</div>
                                             </div>
                                         </div>
-                                        <hr />
-                                        <div className="row padding-left">
-                                            <div className="col-sm-12 col-md-12 col-lg-12">
+                                        {/* <hr style={{width : '2px'}}/> */}
+                                        <div className="row" style={{margin : " 4% 2%" , paddingTop: '1%'}}>
+                                            <div className="col-sm-12 col-md-12 col-lg-12 border-top" >
                                                 <div className="rest-address">CUISINES : {item.Cuisine.length && item.Cuisine.map((item) => item.name + ' ')}</div>
                                                 <div className="rest-address">COST FOR TWO : {item.cost} </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 ) : <div className="noData"> No Data Found</div>
                             }
                         </div>

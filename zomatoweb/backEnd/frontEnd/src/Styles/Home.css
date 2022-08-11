@@ -156,10 +156,9 @@ form.example::after {
 
 .componentHeading {
   text-align: left;
-  color: #192f60;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 5px;;
 }
 
 .componentSubHeading {
