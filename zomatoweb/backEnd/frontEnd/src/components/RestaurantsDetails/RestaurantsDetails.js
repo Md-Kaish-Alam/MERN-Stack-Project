@@ -40,7 +40,7 @@ export default function RestaurantsDetails() {
   const [isFullImageOpen, setFullImageOpen] = useState(false)
   const [menu, setMenu] = useState({})
   const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedItem , setSelectedItem] = useState()
+  const [selectedItem, setSelectedItem] = useState()
 
 
   useEffect(() => {      //behave like componentDidMount if second parameter is a blank array and if it is not blank it behaves like componentDidUpdate
@@ -217,10 +217,12 @@ export default function RestaurantsDetails() {
                 </ul>
               </div>
               <div className='price'>
-                <div className='cart-container' >
+                <div className='cart-container'>
                   <div className='cart'>
                     <h3 className='col-sm-9'>Your Orders</h3>
-                    {JSON.stringify(selectedItem)}
+                    <div style={{width:'100px', height:'300px'}}>
+                      {JSON.stringify(selectedItem)}
+                    </div>
                   </div>
                 </div>
                 <div className='price-container' style={{ display: 'flex', flexDirection: 'row' }}>
