@@ -197,6 +197,14 @@
   height: 90%;
 }
 
+.cart-item {
+  overflow: hidden;
+  border: 1px solid black;
+  width: 100%;
+  height: 450px;
+  padding: 2%;
+}
+
 .price-container {
   height: 10%;
 }

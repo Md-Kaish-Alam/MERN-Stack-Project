@@ -220,8 +220,14 @@ export default function RestaurantsDetails() {
                 <div className='cart-container'>
                   <div className='cart'>
                     <h3 className='col-sm-9'>Your Orders</h3>
-                    <div style={{width:'100px', height:'300px'}}>
-                      {JSON.stringify(selectedItem)}
+                    <div className='cart-item'>
+                      <div className='iname'>
+                          {selectedItem !== undefined ? selectedItem.itemName : ''}
+                      </div>
+                      <div className='iprice'>
+                          {selectedItem !== undefined ? selectedItem.itemPrice : ''}
+                      </div>
+                      {/* {JSON.stringify(selectedItem)} */}
                     </div>
                   </div>
                 </div>
