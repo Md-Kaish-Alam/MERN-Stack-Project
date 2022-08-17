@@ -40,7 +40,7 @@ export default function RestaurantsDetails() {
   const [isFullImageOpen, setFullImageOpen] = useState(false)
   const [menu, setMenu] = useState({})
   const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedItem, setSelectedItem] = useState()
+  const [selectedItems, setSelectedItems] = useState({})
 
 
   useEffect(() => {      //behave like componentDidMount if second parameter is a blank array and if it is not blank it behaves like componentDidUpdate
@@ -61,7 +61,10 @@ export default function RestaurantsDetails() {
 
     let price = totalPrice + item.itemPrice;
     setTotalPrice(price);
-    setSelectedItem(item);
+    setSelectedItems((prev) => ({
+      ...prev,
+      [item.name]: item
+    }))
   }
 
   const remTotalPrice = (item) => {
@@ -73,7 +76,10 @@ export default function RestaurantsDetails() {
     else {
       setTotalPrice(price);
     }
-    setSelectedItem(undefined);
+    setSelectedItems((prev) => ({
+      ...prev,
+      [item.name]: undefined
+    }));
   }
 
   const loadScript = (src) => {
@@ -222,10 +228,10 @@ export default function RestaurantsDetails() {
                     <h3 className='col-sm-9'>Your Orders</h3>
                     <div className='cart-item'>
                       <div className='iname'>
-                          {selectedItem !== undefined ? selectedItem.itemName : ''}
+                        {Object.values(selectedItems).map((ele) => ele.itemName).join("\n")}
                       </div>
                       <div className='iprice'>
-                          {selectedItem !== undefined ? selectedItem.itemPrice : ''}
+                        {Object.values(selectedItems).map((ele) => ele.itemPrice).join("\n")}
                       </div>
                       {/* {JSON.stringify(selectedItem)} */}
                     </div>
