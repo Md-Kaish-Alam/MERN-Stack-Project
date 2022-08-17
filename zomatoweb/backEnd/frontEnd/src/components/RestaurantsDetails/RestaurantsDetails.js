@@ -227,7 +227,6 @@ export default function RestaurantsDetails() {
                       <div className='iprice'>
                           {selectedItem !== undefined ? selectedItem.itemPrice : ''}
                       </div>
-                      {/* {JSON.stringify(selectedItem)} */}
                     </div>
                   </div>
                 </div>
