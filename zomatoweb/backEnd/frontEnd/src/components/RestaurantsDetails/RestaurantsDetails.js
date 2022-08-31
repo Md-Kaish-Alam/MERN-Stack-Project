@@ -38,15 +38,27 @@ export default function RestaurantsDetails() {
   const [restaurant, setRestaurant] = useState({})
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false)
   const [isFullImageOpen, setFullImageOpen] = useState(false)
-  const [menu, setMenu] = useState({})
+  const [menu, setMenu] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedItems, setSelectedItems] = useState({})
+  const [selectedItems, setSelectedItems] = useState({});
+  const [menuError, setMenuError] = useState({
+    isError: false,
+    errorMessage: ""
+  });
+  const [restaurantError, setRestaurantError] = useState({
+    isError: false,
+    errorMessage: ""
+  })
 
 
   useEffect(() => {      //behave like componentDidMount if second parameter is a blank array and if it is not blank it behaves like componentDidUpdate
     fetch(`http://localhost:6767/restaurant/details/${rName}`, { method: 'GET' })
       .then(response => response.json())
-      .then(data => setRestaurant(data.data))
+      .then(data => {
+        setRestaurantError((prev) => ({ ...prev, isError: false }));
+        setRestaurant(data.data ?? [])
+      })
+      .catch(() => setRestaurantError({ isError: true, errorMessage: "This restaurant is not available right now or You may have some connection problem!" }))
   }, [rName])
 
 
@@ -54,7 +66,11 @@ export default function RestaurantsDetails() {
   const fetchMenu = () => {
     fetch(`http://localhost:6767/restaurant/menu/${rName}`, { method: 'GET' })
       .then(response => response.json())
-      .then(data => setMenu(data.data))
+      .then(data => {
+        setMenuError((prev) => ({ ...prev, isError: false }));
+        setMenu(data.data ?? [])
+      })
+      .catch(() => setMenuError({ isError: true, errorMessage: "The menu is not available right now or you may have some connection problem!" }))
   }
 
   const addTotalPrice = (item) => {
@@ -144,42 +160,45 @@ export default function RestaurantsDetails() {
     <div>
       <Header></Header>
       <div className="container">
-        <div className='img-container'>
-          <img src={thumb} height='500px' width='100%' alt='Foodimage' />
-          <button className='gallery-button' onClick={() => setFullImageOpen(true)}>Click to see image</button>
-        </div>
-        <button
-          className='btn btn-danger'
-          style={{ float: 'right', margin: '15px', backgroundColor: '#ce0505' }}
-          onClick={() => { setIsMenuModalOpen(true); fetchMenu(); }}>
-          Place Online Order
-        </button>
-        <div className='heading'>{name}</div>
-        <div className='tab-content'>
-          <Tabs>
-            <TabList
-              style={{
-                borderBottom: '1px solid black'
-              }}
-            >
-              <Tab>OverView</Tab>
-              <Tab>Contact</Tab>
-            </TabList>
-            <TabPanel>
-              <div className='about'>About the Place</div>
-              <div className='head'>Cuisine</div>
-              {cuisineList}
-              <div className='head'>Average Cost</div>
-              <div className='value'>&#8377;{cost}</div>
-            </TabPanel>
-            <TabPanel>
-              <div className='head'>Phone Number</div>
-              <div className='value'>+91-7061238198</div>
-              <div className='head'>{name}</div>
-              <div className='value'>{address}</div>
-            </TabPanel>
-          </Tabs>
-        </div>
+        {restaurantError.isError === false ?
+          <>
+            <div className='img-container'>
+              <img src={thumb} height='500px' width='100%' alt='Foodimage' />
+              <button className='gallery-button' onClick={() => setFullImageOpen(true)}>Click to see image</button>
+            </div>
+            <button
+              className='btn btn-danger'
+              style={{ float: 'right', margin: '15px', backgroundColor: '#ce0505' }}
+              onClick={() => { setIsMenuModalOpen(true); fetchMenu(); }}>
+              Place Online Order
+            </button>
+            <div className='heading'>{name}</div>
+            <div className='tab-content'>
+              <Tabs>
+                <TabList
+                  style={{
+                    borderBottom: '1px solid black'
+                  }}
+                >
+                  <Tab>OverView</Tab>
+                  <Tab>Contact</Tab>
+                </TabList>
+                <TabPanel>
+                  <div className='about'>About the Place</div>
+                  <div className='head'>Cuisine</div>
+                  {cuisineList}
+                  <div className='head'>Average Cost</div>
+                  <div className='value'>&#8377;{cost}</div>
+                </TabPanel>
+                <TabPanel>
+                  <div className='head'>Phone Number</div>
+                  <div className='value'>+91-7061238198</div>
+                  <div className='head'>{name}</div>
+                  <div className='value'>{address}</div>
+                </TabPanel>
+              </Tabs>
+            </div>
+          </> : <div className='tab-content'>{restaurantError.errorMessage}</div>}
       </div>
       <div>
         <Modal isOpen={isMenuModalOpen} className='modal-content modal-contents'>
@@ -187,73 +206,79 @@ export default function RestaurantsDetails() {
             <button className='btn btn-light float-end cut' onClick={() => setIsMenuModalOpen(false)} style={modalStyle}>X</button>
             <div className='main'>
               <div className='menu'>
-                <ul class="list-unstyled">
+                <ul className="list-unstyled">
                   {
-                    menu.length && menu.map((item, index) =>
-                      <li key={index}>
-                        <div className='cuisine' >
-                          <div className='cuisineDetails'>
-                            <div className='isVeg' >
-                              {
-                                item.isVeg ? <span className='text-success fs-6'>Veg</span> :
-                                  <span className='text-danger fs-6'>Non-Veg</span>
-                              }
+                    menuError.isError === false ?
+                      menu.length !== 0 && menu.map((item, index) =>
+                        <li key={index}>
+                          <div className='cuisine' >
+                            <div className='cuisineDetails'>
+                              <div className='isVeg' >
+                                {
+                                  item.isVeg ? <span className='text-success fs-6'>Veg</span> :
+                                    <span className='text-danger fs-6'>Non-Veg</span>
+                                }
+                              </div>
+                              <div className='cuisine-name'>{item.itemName}</div>
+                              <div className='cuisine-price'>&#8377;{item.itemPrice}</div>
+                              <div className='cuisine-desc'>{item.itemDescription}</div>
                             </div>
-                            <div className='cuisine-name'>{item.itemName}</div>
-                            <div className='cuisine-price'>&#8377;{item.itemPrice}</div>
-                            <div className='cuisine-desc'>{item.itemDescription}</div>
+                            <div className='cart-btn'>
+                              <button className='btn btn-info cart-btn'
+                                onClick={() => {
+                                  addTotalPrice(item);
+                                }}>
+                                Add
+                              </button>
+                              <button className='btn btn-warning cart-btn'
+                                onClick={() => {
+                                  remTotalPrice(item);
+                                }}>
+                                Remove
+                              </button>
+                            </div>
                           </div>
-                          <div className='cart-btn'>
-                            <button className='btn btn-info cart-btn'
-                              onClick={() => {
-                                addTotalPrice(item);
-                              }}>
-                              Add
-                            </button>
-                            <button className='btn btn-warning cart-btn'
-                              onClick={() => {
-                                remTotalPrice(item);
-                              }}>
-                              Remove
-                            </button>
-                          </div>
-                        </div>
-                      </li>)
+                        </li>) :
+                      <p>{menuError.errorMessage}</p>
                   }
                 </ul>
               </div>
-              <div className='price'>
-                <div className='cart-container'>
-                  <div className='cart'>
-                    <h3 className='col-sm-9'>Your Orders</h3>
-                    <div className='cart-item'>
-                      <div className='iname'>
-                        {Object.values(selectedItems).map((ele) => ele.itemName).join("\n")}
+              {menuError.isError === false ?
+                <>
+                  <div className='price'>
+                    <div className='cart-container'>
+                      <div className='cart'>
+                        <h3 className='col-sm-9'>Your Orders</h3>
+                        <div className='cart-item'>
+                          <div className='iname'>
+                            {Object.values(selectedItems).filter((ele) => ele !== undefined).map((ele) => ele.itemName).join("\n")}
+                          </div>
+                          <div className='iprice'>
+                            {Object.values(selectedItems).filter((ele) => ele !== undefined).map((ele) => ele.itemPrice).join("\n")}
+                          </div>
+                        </div>
                       </div>
-                      <div className='iprice'>
-                        {Object.values(selectedItems).map((ele) => ele.itemPrice).join("\n")}
+                    </div>
+                    <div className='price-container' style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div className='totalPrice' style={{ width: '60%' }}>
+                        <h3 style={{ marginLeft: '8%' }}> Total Price : {totalPrice}</h3>
+
+                      </div>
+                      <div className='pay-btn' style={{ width: '40%', marginTop: '5%' }}>
+                        <button
+                          className='btn btn-danger float-end'
+                          onClick={() => {
+                            setIsMenuModalOpen(false);
+                            loadScript(`https://checkout.razorpay.com/v1/checkout.js`);
+                            openRazorpay();
+                          }}>
+                          Pay Now
+                        </button>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className='price-container' style={{ display: 'flex', flexDirection: 'row' }}>
-                  <div className='totalPrice' style={{ width: '60%' }}>
-                    <h3 style={{ marginLeft: '8%' }}> Total Price : {totalPrice}</h3>
-
-                  </div>
-                  <div className='pay-btn' style={{ width: '40%', marginTop: '5%' }}>
-                    <button
-                      className='btn btn-danger float-end'
-                      onClick={() => {
-                        setIsMenuModalOpen(false);
-                        loadScript(`https://checkout.razorpay.com/v1/checkout.js`);
-                        openRazorpay();
-                      }}>
-                      Pay Now
-                    </button>
-                  </div>
-                </div>
-              </div>
+                </>
+                : undefined}
             </div>
           </div>
         </Modal>
