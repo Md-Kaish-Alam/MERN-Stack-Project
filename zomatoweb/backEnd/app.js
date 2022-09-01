@@ -14,8 +14,8 @@ const registerRoutes = require('./routes/register')
 const PORT = 6767
 // const PORT = process.env.PORT || 6767
 
-// const DBCONNECTINGSTRING = `mongodb://localhost:27017/ZomatoFile`
-const DBCONNECTINGSTRING = `mongodb+srv://KaishAlam:Fp0MlaJlUzzh97Ys@cluster0.nrq1r.mongodb.net/ZomatoFile`
+const DBCONNECTINGSTRING = `mongodb://localhost:27017/ZomatoFile`
+// const DBCONNECTINGSTRING = `mongodb+srv://KaishAlam:Fp0MlaJlUzzh97Ys@cluster0.nrq1r.mongodb.net/ZomatoFile`
 
 // mongoose.connect(DBCONNECTINGSTRING, () => {
 //     useNewUrlParser : true;

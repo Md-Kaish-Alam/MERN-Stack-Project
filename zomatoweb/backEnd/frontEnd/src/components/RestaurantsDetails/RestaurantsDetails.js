@@ -79,7 +79,7 @@ export default function RestaurantsDetails() {
     setTotalPrice(price);
     setSelectedItems((prev) => ({
       ...prev,
-      [item.name]: item
+      [item.itemName]: item
     }))
   }
 
@@ -94,7 +94,7 @@ export default function RestaurantsDetails() {
     }
     setSelectedItems((prev) => ({
       ...prev,
-      [item.name]: undefined
+      [item.itemName]: undefined
     }));
   }
 
@@ -155,6 +155,8 @@ export default function RestaurantsDetails() {
   }
   const { name, thumb, cost, Cuisine, address } = restaurant
   let cuisineList = !(Cuisine === undefined) && Cuisine.length && Cuisine.map((item) => item.name)
+
+  console.log(selectedItems);
 
   return (
     <div>
@@ -249,12 +251,14 @@ export default function RestaurantsDetails() {
                     <div className='cart-container'>
                       <div className='cart'>
                         <h3 className='col-sm-9'>Your Orders</h3>
-                        <div className='cart-item'>
-                          <div className='iname'>
-                            {Object.values(selectedItems).filter((ele) => ele !== undefined).map((ele) => ele.itemName).join("\n")}
-                          </div>
-                          <div className='iprice'>
-                            {Object.values(selectedItems).filter((ele) => ele !== undefined).map((ele) => ele.itemPrice).join("\n")}
+                        <div className='cart-menu'>
+                          <div className='cart-item'>
+                            <div className='iname'>
+                              {Object.values(selectedItems).filter((ele) => ele !== undefined).map((ele) => ele.itemName).join("\n")}
+                            </div>
+                            <div className='iprice'>
+                              {Object.values(selectedItems).filter((ele) => ele !== undefined).map((ele) => ele.itemPrice).join("\n")}
+                            </div>
                           </div>
                         </div>
                       </div>
